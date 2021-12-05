@@ -1,104 +1,40 @@
-#include<cstdio>
+##include<cstdio>
 #include<iostream>
 #include<vector>
 #include<string>
-#include<customer.h>
 using namespace std;
 
 
-class cinema
+class food
 {
 public:
-    int id;
-    int row;
-    int column;
-    vector<vector<*customer::customer>> seats virtual void bake() = 0;
-    virtual void cut() = 0;
-    virtual void box() = 0;
+    virtual int price();
 };
 
-class margherita: public pizza
+class Coke: public food
 {
 public:
-    void bake() {
-        printf("marghrita baked.\n");
+    int price();
     }
-    void cut() {
-        printf("marghrita cutted.\n");
-    }
-    void box() {
-        printf("marghrita boxed.\n");
-    }
-    margherita(){}
 };
 
-class hawaii: public pizza
+class Blacktea: public food
 {
 public:
-    void bake() {
-        printf("hawaii baked.\n");
+    int price();
     }
-    void cut() {
-        printf("hawaii cutted.\n");
-    }
-    void box() {
-        printf("hawaii boxed.\n");
-    }
-    hawaii(){}
 };
 
-class pepperoni: public pizza
+class Popcorn: public food
 {
 public:
-    void bake() {
-        printf("pepperoni baked.\n");
+    int price();
     }
-    void cut() {
-        printf("pepperoni cutted.\n");
-    }
-    void box() {
-        printf("pepperoni boxed.\n");
-    }
-    pepperoni(){}
 };
 
-class pizzastore
+class Churros: public food
 {
 public:
-    static pizza* create(int p){
-        if (p == 1) {
-            pizza* order = new margherita;
-            return order;
-        }
-        else if (p == 2) {
-            pizza* order = new hawaii;
-            return order;
-        }
-        else if (p == 3) {
-            pizza* order = new pepperoni;
-            return order;
-        }
+    int price();
     }
-    //pizzastore(){}
 };
-
-int main(){
-    printf("Please select: 1: martherita; 2: hawaii; 3: pepperoni; 0: end\n");
-    //machine* m = new machine();//Cake* c = new Cake;
-    int select = 4;
-    while(1){
-        scanf("%d", &select);
-        if (select > 3 || select < 0) printf("error! Please select again.\n");
-        else if (select != 0){
-            //pizzastore* store = new pizzastore;
-            pizza* order = pizzastore::create(select);
-            order->bake();
-            order->cut();
-            order->box();
-        }
-        else {
-            printf("end order\n");
-            break;
-        };
-    }
-}
