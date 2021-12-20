@@ -1,9 +1,14 @@
-#include <others.h>
-
+#include "dispatcher.h"
+#include "customer.h"
+#include "backstage.h"
+#include "salesman.h"
+#include "foodstand.h"
+#include "food.h"
+#include "movie.h"
+#include "others.h"
+#include "cinema.h"
 using namespace std;
 
 int main(){
-	others::time t(1,2,3,4);
-	others::package p(time(1,2));
 	return 0;
 }
