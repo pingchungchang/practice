@@ -15,26 +15,22 @@ class Coke: public food
 {
 public:
     int price();
-    }
 };
 
 class Blacktea: public food
 {
 public:
     int price();
-    }
 };
 
 class Popcorn: public food
 {
 public:
     int price();
-    }
 };
 
 class Churros: public food
 {
 public:
     int price();
-    }
 };

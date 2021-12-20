@@ -1,5 +1,5 @@
-//#include <movie.h>
-//#include <cinema.h>
+#include <movie.h>
+#include <cinema.h>
 using namespace std;
 
 typedef struct time{
