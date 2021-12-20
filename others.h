@@ -1,23 +1,47 @@
-#include "movie.h"
-#include "cinema.h" 
 using namespace std;
 #define ll long long
-typedef struct time{
-	ll month;
-	ll day;
-	ll hour;
-	ll minute;
-	time();
-}time;
+
+class movie;
+class cinema;
+
+#ifndef others_defined
+typedef struct movietime{
+	int month;
+	int day;
+	int hour;
+	int minute;
+	movietime();
+	movietime(int h,int m){
+		hour = h;
+		minute= m;
+	}
+	movietime(int mon,int d,int h,int m){
+		month = mon;
+		day=d;
+		hour=h;
+		minute=m;
+	}
+}movietime;
+
 typedef struct package{
 	movie* mov;
 	cinema* cine;
-	time t;
-	package();
+	movietime t;
+	package(movietime x){
+		t.month= x.month;
+		t.day = x.day;
+		t.hour =x.hour;
+		t.minute=x.minute;
+	}
 }package;
+
 typedef struct ticketinfo{
-	time t;
+	movietime t;
 	int value;
 	movie* mov;
 	cinema* cine;
 }ticket;
+
+#define others_defined
+
+#endif

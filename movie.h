@@ -1,21 +1,21 @@
 #include <vector>
 #include <string>
-#include"others.h"
-using namespace std;
+#include "others.h"
 
+using namespace std;
 
 class movie
 {
 public:
     string name;
-    time duration;
+    movietime duration;
     string description;
-    vector<pair<cinema*, time>> time_based_table;
+    vector<pair<cinema*, movietime>> time_based_table;
     int price_factor;
-    vector<package*> Search(cinema*, time){};
-    vector<pair<cinema*, time>> Get_Table(){};
+    vector<package*> Search(cinema*, movietime);
+    vector<pair<cinema*, movietime>> Get_Table();
     movie();
-    bool Add_Movie(cinema*){};
-    bool Delete_Movie(movie*) {};
+    bool Add_Movie(cinema*);
+    bool Delete_Movie(movie*);
 };
 

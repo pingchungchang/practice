@@ -1,7 +1,8 @@
 #include "string"
 #include "others.h"
-#include "dispatcher.h"
 using namespace std;
+
+class dispatcher;
 
 class customer{
 public:
@@ -10,8 +11,8 @@ public:
     string id;
     int age;
     vector<package*> Search_By_Movie(string movie_name);
-    vector<package*> Search_By_Time(time t);
+    vector<package*> Search_By_Time(movietime t);
     vector<package*> Search_By_Type(int cinema);
     int Buy_Food(string food_name);
-    ticketinfo Buy_Ticket(string movie_name,int cinema_id,time t);
+    ticketinfo Buy_Ticket(string movie_name,int cinema_id,movietime t);
 };

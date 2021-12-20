@@ -1,9 +1,12 @@
-##include<cstdio>
+#include<cstdio>
 #include<iostream>
 #include<vector>
 #include<string>
-#include<food.h>
+#include"food.h"
+
 using namespace std;
+
+class food;
 
 class foodstand
 {
