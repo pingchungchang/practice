@@ -1,8 +1,5 @@
-#include<cstdio>
-#include<iostream>
-#include<vector>
-#include<string>
-#include<customer.h>
+#include <vector>
+#include <string>
 using namespace std;
 
 

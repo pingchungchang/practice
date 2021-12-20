@@ -1,4 +1,5 @@
 //#include <movie.h>
+//#include <cinema.h>
 using namespace std;
 
 typedef struct time{
@@ -10,6 +11,7 @@ typedef struct time{
 		hour = h;
 		minute= m;
 	}
+	time(){};
 	time(int mon,int d,int h,int m){
 		month = mon;
 		day=d;
