@@ -10,6 +10,6 @@ movie::movie(int name1, time(int), string description1, int price_factor1)
     name = name1;
     duration = duration1;
     description = description1;
-    time_based_table.reesize(0);
+    time_based_table.resize(0);
     price_factor = price_factor1;
 }
