@@ -5,7 +5,7 @@
 using namespace std;
 
 
-movie::movie(int name1, time(int), string description1, int price_factor1)
+movie::movie(string name1, movietime(int) duration1, string description1, int price_factor1)
 {
     name = name1;
     duration = duration1;
