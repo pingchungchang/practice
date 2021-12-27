@@ -2,6 +2,7 @@
 #include "customer.h"
 #include "salesman.h"
 #include "dispatcher.h"
+#include "others.h"
 #include <string>
 #include <iostream>
 #include <sstream>
@@ -41,7 +42,7 @@ int main(){
 
 			if (inputStrings[0] == "New_Clerk")
 			{
-				salesman* s = new salesman("DefaultName", inputStrings[1], 10);
+				salesman* s = new salesman();
 				salesmans.push_back(s);
 			}
 

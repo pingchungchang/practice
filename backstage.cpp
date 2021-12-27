@@ -3,9 +3,6 @@
 backstage::backstage(){
 	fstand = new foodstand();
 }
-static backstage backstage::Get_Instance(){
-
-}
 movie* backstage::New_Movie(string name,movietime t,string description,int price_factor){
 	movie* newone = new movie();
 	newone->name = name;
