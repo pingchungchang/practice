@@ -1,4 +1,4 @@
-#include "customer.h"
-#include <salesman.h"
 
+static dispatcher dispatcher::Get_Instance(){
 
+}

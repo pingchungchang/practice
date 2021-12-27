@@ -1,15 +1,17 @@
 #include "others.h"
-
 using namespace std;
 
 class backstage;
 class customer;
-
+class dispatcher;
 class salesman{
 private:
     int id;
     backstage* bkstage;
+    dispatcher* dspatcher;
 public:
+	static int num;;
+	saleman();
     int Get_Id();
     vector<package*> Search_By_Movie(string movie_name);
     vector<package*> Search_By_Time(movietime t);

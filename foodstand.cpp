@@ -8,6 +8,7 @@ using namespace std;
 class foodstand
 {
 public:
+	foodstand(){};
     static food* create(int p){
         if (p == 1) {
             food* f = new Coke;

@@ -9,28 +9,34 @@ customer::customer(string c_name,string c_id,int c_age){
     age = c_age;
 }
 
-customer::vector<package*> Search_By_Movie(string movie_name){
+vector<package*> customer::Search_By_Movie(string movie_name){
 	dispatcher* d = dispatcher::Get_Instance();
 	salesman* seller = dispatcher->Match(this);
 	return salesman->Search_By_Movie(movie_name);
 }
-customer::vector<package*> Search_By_Time(time){
+vector<package*> customer::Search_By_Time(time){
 	dispatcher* d = dispatcher::Get_Instance();
 	salesman* seller = dispatcher->Match(this);
 	return salesman->Search_By_Time(t);	
 }
-customer::vector<package*> Search_By_Type(int cinema){
+vector<package*> customer::Search_By_Type(int cinema){
 	dispatcher* d = dispatcher::Get_Instance();
 	salesman* seller = dispatcher->Match(this);
 	return salesman->Search_By_Time(cinema);	
 }
-customer::int Buy_Food(string food_name){
+int customer::Buy_Food(string food_name){
 	dispatcher* d = dispatcher::Get_Instance();
 	salesman* seller = dispatcher->Match(this);
 	return salesman->Buy_food(this,food_name);	
 }
-customer::ticketinfo Buy_Ticket(string movie_name,int cinema_id,time t){
+ticketinfo customer::Buy_Ticket(string movie_name,int cinema_id,time t){
 	dispatcher* d = dispatcher::Get_Instance();
 	salesman* seller = dispatcher->Match(this);
 	return salesman->Buy_Ticket(this,movie_name,cinema_id,t);	
 }
+customer::customer(string c_name,string c_id,int c_age){
+	this->name = c_name;
+	this->id = c_id;
+	this->age = c_age;
+}
+
