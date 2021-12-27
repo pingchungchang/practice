@@ -5,40 +5,13 @@
 using namespace std;
 
 
-class cinema
+cinema::cinema(int id1, int column1, int row1, string type1)
 {
 public:
-    virtual void () = 0;
+   id = id1;
+   seats;
+   rows = row1;
+   columns = column1;
+   time_based_table.resize(0);
+   price_factor = 1;
 };
-
-class Coke: public food
-{
-public:
-    int price() {
-        return 25;
-    }
-};
-
-class Blacktea: public food
-{
-public:
-    int price() {
-        return 30;
-    }
-};
-
-class Popcorn: public food
-{
-public:
-    int price() {
-        return 50;
-    }
-};
-class Churros: public food
-{
-public:
-    int price() {
-        return 50;
-    }
-};
-
