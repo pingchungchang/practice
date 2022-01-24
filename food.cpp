@@ -2,42 +2,24 @@
 #include<iostream>
 #include<vector>
 #include<string>
+
+#include "food.h"
 using namespace std;
 
 
-class food
-{
-public:
-    virtual int price() = 0;
-};
+int Coke::price() {
+    return 25;
+}
 
-class Coke: public food
-{
-public:
-    int price() {
-        return 25;
-    }
-};
+int Blacktea::price() {
+    return 30;
+}
 
-class Blacktea: public food
-{
-public:
-    int price() {
-        return 30;
-    }
-};
+int Popcorn::price() {
+    return 50;
+}
 
-class Popcorn: public food
-{
-public:
-    int price() {
-        return 50;
-    }
-};
-class Churros: public food
-{
-public:
-    int price() {
-        return 50;
-    }
-};
+int Churros::price() {
+    return 50;
+}
+

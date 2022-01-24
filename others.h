@@ -4,13 +4,15 @@ using namespace std;
 class movie;
 class cinema;
 
-#ifndef others_defined
+#ifndef others_defined // if "others_defined" no defined => if, else
+#define others_defined 1
+
 typedef struct movietime{
 	int month;
 	int day;
 	int hour;
 	int minute;
-	movietime();
+	movietime(){}
 	movietime(int h,int m){
 		hour = h;
 		minute= m;
@@ -41,7 +43,5 @@ typedef struct ticketinfo{
 	movie* mov;
 	cinema* cine;
 }ticket;
-
-#define others_defined
 
 #endif

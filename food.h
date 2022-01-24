@@ -2,13 +2,16 @@
 #include<iostream>
 #include<vector>
 #include<string>
-using namespace std;
 
+#ifndef food_defined
+#define food_defined 1
+
+using namespace std;
 
 class food
 {
 public:
-    virtual int price();
+    virtual int price() = 0;
 };
 
 class Coke: public food
@@ -34,3 +37,5 @@ class Churros: public food
 public:
     int price();
 };
+
+#endif

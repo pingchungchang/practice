@@ -1,5 +1,9 @@
 #include "string"
 #include "others.h"
+
+#ifndef customer_defined
+#define customer_defined 1
+
 using namespace std;
 
 class dispatcher;
@@ -12,7 +16,9 @@ public:
     int age;
     vector<package*> Search_By_Movie(string movie_name);
     vector<package*> Search_By_Time(movietime t);
-    vector<package*> Search_By_Type(int cinema);
+    vector<package*> Search_By_Type(int ci);
     int Buy_Food(string food_name);
     ticketinfo Buy_Ticket(string movie_name,int cinema_id,movietime t);
 };
+
+#endif

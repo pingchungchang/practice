@@ -1,8 +1,11 @@
 #include "others.h"
 #include "dispatcher.h"
-#include "saleman.h"
+#include "salesman.h"
 #include "movie.h"
+#include "customer.h"
+
 using namespace std;
+
 customer::customer(string c_name,string c_id,int c_age){
     name = c_name;
     id = c_id;
@@ -11,32 +14,27 @@ customer::customer(string c_name,string c_id,int c_age){
 
 vector<package*> customer::Search_By_Movie(string movie_name){
 	dispatcher* d = dispatcher::Get_Instance();
-	salesman* seller = dispatcher->Match(this);
-	return salesman->Search_By_Movie(movie_name);
+	salesman* seller = d->Match(this);
+	return seller->Search_By_Movie(movie_name);
 }
-vector<package*> customer::Search_By_Time(time){
+vector<package*> customer::Search_By_Time(movietime t){
 	dispatcher* d = dispatcher::Get_Instance();
-	salesman* seller = dispatcher->Match(this);
-	return salesman->Search_By_Time(t);	
+	salesman* seller = d->Match(this);
+	return seller->Search_By_Time(t);	
 }
-vector<package*> customer::Search_By_Type(int cinema){
+vector<package*> customer::Search_By_Type(int ci){
 	dispatcher* d = dispatcher::Get_Instance();
-	salesman* seller = dispatcher->Match(this);
-	return salesman->Search_By_Time(cinema);	
+	salesman* seller = d->Match(this);
+	return seller->Search_By_Type(ci);	
 }
 int customer::Buy_Food(string food_name){
 	dispatcher* d = dispatcher::Get_Instance();
-	salesman* seller = dispatcher->Match(this);
-	return salesman->Buy_food(this,food_name);	
+	salesman* seller = d->Match(this);
+	return seller->Buy_Food(this,food_name);	
 }
-ticketinfo customer::Buy_Ticket(string movie_name,int cinema_id,time t){
+ticketinfo customer::Buy_Ticket(string movie_name,int cinema_id,movietime t){
 	dispatcher* d = dispatcher::Get_Instance();
-	salesman* seller = dispatcher->Match(this);
-	return salesman->Buy_Ticket(this,movie_name,cinema_id,t);	
-}
-customer::customer(string c_name,string c_id,int c_age){
-	this->name = c_name;
-	this->id = c_id;
-	this->age = c_age;
+	salesman* seller = d->Match(this);
+	return seller->Buy_Ticket(this,movie_name,cinema_id,t);	
 }
 

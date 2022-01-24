@@ -12,6 +12,6 @@ class foodstand
 {
 public:
 	foodstand();
-    static food* create(int p);
+    food* create(int p);
     int Buy(string f);
 };

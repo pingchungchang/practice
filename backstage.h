@@ -5,12 +5,15 @@
 #include <string>
 #include <map>
 
+#ifndef backstage_defined
+#define backstage_defined 1
+
 class backstage{
 public:
-	backstage(){}
-	static backstage Get_Instance(){
+	backstage();
+	static backstage* Get_Instance(){
 		static backstage instance;
-		return instance;		
+		return &instance;		
 	}
     movie* New_Movie(string name,movietime t,string description,int price_factor);
     bool Add_Movie(string movie_name,int cinema_id);
@@ -27,3 +30,5 @@ private:
     foodstand* fstand;
 
 };
+
+#endif

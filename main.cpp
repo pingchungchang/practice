@@ -21,7 +21,7 @@ vector<string> SplitString(string s)
 
 int main(){
 	// New class
-	backstage backStage = backstage::Get_Instance();
+	backstage* backStage = backstage::Get_Instance();
 	vector<customer*> customers;
 	vector<salesman*> salesmans;
 
@@ -51,7 +51,7 @@ int main(){
 				string name = inputStrings[1];
 				movietime t;
 				t.minute = stoi(inputStrings[2]);
-				movie* m = backStage.New_Movie(name, t, inputStrings[3], 0.5);
+				movie* m = backStage->New_Movie(name, t, inputStrings[3], 0.5);
 			}
 
 			if (inputStrings[0] == "New_Cinema")
@@ -60,7 +60,7 @@ int main(){
 				int cinemaid = stoi(inputStrings[1]);
 				int rownum = stoi(inputStrings[2]);
 				int colnum = stoi(inputStrings[3]);
-				cinema* c = backStage.New_Cinema(cinemaid, colnum, rownum, "kids");
+				cinema* c = backStage->New_Cinema(cinemaid, colnum, rownum, "kids");
 			}
 		}
 	}

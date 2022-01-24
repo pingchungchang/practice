@@ -2,10 +2,12 @@
 #include<iostream>
 #include<vector>
 #include<string>
+
+#include "movie.h"
 using namespace std;
 
 
-movie::movie(string name1, movietime(int) duration1, string description1, int price_factor1)
+movie::movie(string name1, movietime duration1, string description1, int price_factor1)
 {
     name = name1;
     duration = duration1;
