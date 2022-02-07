@@ -24,6 +24,7 @@ cinema* backstage::New_Cinema(int id,int column,int row,string type){
 	this->cinemas[id] = c;
 	return c;
 }
-
-
+bool backstage::Delete_Movie(string movie_name){
+	onstage_movies.erase(movie_name);
+}
 

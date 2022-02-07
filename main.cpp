@@ -18,13 +18,11 @@ vector<string> SplitString(string s)
 	vector<string> outputString(begin, end);
 	return outputString;
 }
-
 int main(){
 	// New class
 	backstage* backStage = backstage::Get_Instance();
 	vector<customer*> customers;
 	vector<salesman*> salesmans;
-
 	while(1)
 	{
 		// Read input
@@ -65,3 +63,4 @@ int main(){
 		}
 	}
 }
+
