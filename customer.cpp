@@ -22,7 +22,7 @@ vector<package*> customer::Search_By_Time(movietime t){
 	salesman* seller = d->Match(this);
 	return seller->Search_By_Time(t);	
 }
-vector<package*> customer::Search_By_Type(int ci){
+vector<package*> customer::Search_By_Type(string ci){
 	dispatcher* d = dispatcher::Get_Instance();
 	salesman* seller = d->Match(this);
 	return seller->Search_By_Type(ci);	

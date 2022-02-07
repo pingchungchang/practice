@@ -19,8 +19,8 @@ public:
     vector<pair<cinema*, movietime>> Get_Table();
     movie(){}
     movie(string name1, movietime duration1, string description1, int price_factor1);
-    bool Add_Movie(cinema*);
-    bool Delete_Movie(movie*);
+    bool Add_Movie(cinema* cinema_pointer);
+    bool Delete_Movie(cinema* cinema_pointer,movietime t);
 };
 
 #endif

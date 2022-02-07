@@ -3,5 +3,5 @@
 #include "time.h"
 salesman* dispatcher::Match(customer* customer_pointer){
     srand(time(NULL));
-    return salesmans[rand() % salemans.size()];
+    return salesmans[rand() % salesmans.size()];
 }

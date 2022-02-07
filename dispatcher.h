@@ -17,7 +17,6 @@ public:
 	    static dispatcher instance;
 		return &instance;    	
 	}
-    int add();
 };
 
 #endif
