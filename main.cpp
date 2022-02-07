@@ -49,12 +49,12 @@ int main(){
 				string name = inputStrings[1];
 				movietime t;
 				t.minute = stoi(inputStrings[2]);
-				movie* m = backStage->New_Movie(name, t, inputStrings[3], 0.5);
+				movie* m = backStage->New_Movie(name, t, inputStrings[3], 1);
 			}
 
 			if (inputStrings[0] == "New_Cinema")
 			{
-				cinema* New_Cinema(int id,int column,int row,string type);
+				// cinema* backStage->New_Cinema(int id,int column,int row,string type);
 				int cinemaid = stoi(inputStrings[1]);
 				int rownum = stoi(inputStrings[2]);
 				int colnum = stoi(inputStrings[3]);

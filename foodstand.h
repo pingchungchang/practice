@@ -15,7 +15,7 @@ public:
     food* create(int p);
     int Buy(string f);
     static foodstand* GetInstance(){
-        foodstand instance;
+        static foodstand instance;
         return &instance;
     }
 };

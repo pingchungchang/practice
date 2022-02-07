@@ -1,0 +1,458 @@
+diff --git a/backstage.cpp b/backstage.cpp
+index 99a8c3d..6315311 100644
+--- a/backstage.cpp
++++ b/backstage.cpp
+@@ -1,5 +1,6 @@
+ #include "backstage.h"
+-
++#include <string>
++using namespace std;
+ backstage::backstage(){
+ 	fstand = new foodstand();
+ }
+@@ -9,9 +10,10 @@ movie* backstage::New_Movie(string name,movietime t,string description,int price
+ 	newone->duration = t;
+ 	newone->description = description;
+ 	newone->price_factor = price_factor;
+-	onstage_movies[newone->name] = newone;
++	onstage_movies[name] = newone;
+ 	return newone;
+ }
++
+ cinema* backstage::New_Cinema(int id,int column,int row,string type){
+ 	cinema* c;
+ 	if(type == "kids"){
+@@ -24,6 +26,71 @@ cinema* backstage::New_Cinema(int id,int column,int row,string type){
+ 	this->cinemas[id] = c;
+ 	return c;
+ }
++bool backstage::Delete_Movie(string movie_name){
++	onstage_movies.erase(movie_name);
++	return true;
++}
++bool backstage::Add_Movie(string movie_name,int cinema_id){
++	cinema* c_pointer = cinemas[cinema_id];
++	movie* m_id = onstage_movies[movie_name];
++	movietime lastone;
++	if(c_pointer->time_based_table.size()>0)lastone = c_pointer->time_based_table[0].first;
++	else{
++		c_pointer->time_based_table.push_back(make_pair(movietime(1,0,0,0),m_id));
++		m_id->time_based_table.push_back(make_pair(c_pointer,movietime(0,0,0,0)));
++		return true;
++	}
++	for(int i = 1;i<c_pointer->time_based_table.size();i++){
++		auto now = c_pointer->time_based_table[i];
++		
++		
++		//error!
++		if(now.first>lastone+movietime(0,0,0,30)+m_id->duration){
++			auto p = make_pair(lastone+movietime(0,0,0,15),m_id);
++			c_pointer->time_based_table.insert(c_pointer->time_based_table.begin()+i,p);
++			m_id->time_based_table.push_back(make_pair(c_pointer,lastone+movietime(0,0,0,15)));
++			return true;
++		}
++	}
++	c_pointer->time_based_table.push_back(make_pair(lastone+movietime(0,0,0,15),m_id));
++	m_id->time_based_table.push_back(make_pair(c_pointer,lastone+movietime(0,0,0,15)));
++	return true;
++}
+ 
++vector<package*> backstage::Search_By_Movie(string movie_name){
++	vector<package*> returns;
++	movie* m_id = onstage_movies[movie_name];
++	for(auto it:m_id->time_based_table){
++		package* tmp = new package(m_id);
++		tmp->t = it.second;
++		tmp->cine = it.first;
++		returns.push_back(tmp);
++	}
++	return returns;
++}
++vector<package*> backstage::Search_By_Time(movietime t){
++	vector<package*> returns;
++	for(auto it:cinemas){
++		for(auto each:it.second->time_based_table){
++			if(each.first>t)break;
++			else if((each.first<t)){
++				continue;
++			}
++			else{
++				package* tmp = new package(each.second);
++				tmp->t = each.first;
++				tmp->cine = it.second;
++				returns.push_back(tmp);
++				break;				
++			}
++		}
++	}
++	return returns;
++}
+ 
+ 
++vector<package*> backstage::Search_By_Type(string cinema_type){return vector<package*>(0);}
++int backstage::Buy_Food (customer* customer_pointer,string food_name){return 0;}
++ticketinfo backstage::Buy_Ticket(customer* customer_pointer,string movie_name,int cinema_id,movietime t){
++	return ticketinfo();
++}
+\ No newline at end of file
+diff --git a/backstage.h b/backstage.h
+index 7e5c339..a7d49f7 100644
+--- a/backstage.h
++++ b/backstage.h
+@@ -5,6 +5,7 @@
+ #include <string>
+ #include <map>
+ 
++using namespace std;
+ #ifndef backstage_defined
+ #define backstage_defined 1
+ 
+@@ -19,9 +20,9 @@ public:
+     bool Add_Movie(string movie_name,int cinema_id);
+     bool Delete_Movie(string movie_name);
+     cinema* New_Cinema(int id,int column,int row,string type);
+-    vector<package*> Search_By_Movies(string movie_name);
++    vector<package*> Search_By_Movie(string movie_name);
+     vector<package*> Search_By_Time(movietime t);
+-    vector<package*> Search_By_type(string cinema_type);
++    vector<package*> Search_By_Type(string cinema_type);
+     int Buy_Food(customer* customer_pointer,string food_name);
+     ticketinfo Buy_Ticket(customer* customer_pointer,string movie_name,int cinema_id,movietime t);
+ private:
+diff --git a/customer.cpp b/customer.cpp
+index a01a829..de69544 100644
+--- a/customer.cpp
++++ b/customer.cpp
+@@ -22,7 +22,7 @@ vector<package*> customer::Search_By_Time(movietime t){
+ 	salesman* seller = d->Match(this);
+ 	return seller->Search_By_Time(t);	
+ }
+-vector<package*> customer::Search_By_Type(int ci){
++vector<package*> customer::Search_By_Type(string ci){
+ 	dispatcher* d = dispatcher::Get_Instance();
+ 	salesman* seller = d->Match(this);
+ 	return seller->Search_By_Type(ci);	
+diff --git a/customer.h b/customer.h
+index a57ca2c..c361945 100644
+--- a/customer.h
++++ b/customer.h
+@@ -16,7 +16,7 @@ public:
+     int age;
+     vector<package*> Search_By_Movie(string movie_name);
+     vector<package*> Search_By_Time(movietime t);
+-    vector<package*> Search_By_Type(int ci);
++    vector<package*> Search_By_Type(string ci);
+     int Buy_Food(string food_name);
+     ticketinfo Buy_Ticket(string movie_name,int cinema_id,movietime t);
+ };
+diff --git a/customer.o b/customer.o
+new file mode 100644
+index 0000000..3c3fd11
+Binary files /dev/null and b/customer.o differ
+diff --git a/dispatcher.cpp b/dispatcher.cpp
+index 969a19d..8bae479 100644
+--- a/dispatcher.cpp
++++ b/dispatcher.cpp
+@@ -1,4 +1,7 @@
+-
+-// static dispatcher dispatcher::Get_Instance(){
+-
+-// }
++#include "dispatcher.h"
++#include "math.h"
++#include "time.h"
++salesman* dispatcher::Match(customer* customer_pointer){
++    srand(time(NULL));
++    return salesmans[rand() % salesmans.size()];
++}
+diff --git a/dispatcher.h b/dispatcher.h
+index 9dce185..c66ce51 100644
+--- a/dispatcher.h
++++ b/dispatcher.h
+@@ -12,14 +12,11 @@ class dispatcher{
+ public:
+     dispatcher(){};
+     vector<salesman*> salesmans;
+-    salesman* Match(customer* customer_pointer){
+-        return nullptr;
+-    }
++    salesman* Match(customer* customer_pointer);
+     static dispatcher* Get_Instance(){
+ 	    static dispatcher instance;
+ 		return &instance;    	
+ 	}
+-    int add();
+ };
+ 
+ #endif
+\ No newline at end of file
+diff --git a/dispatcher.o b/dispatcher.o
+new file mode 100644
+index 0000000..143da4f
+Binary files /dev/null and b/dispatcher.o differ
+diff --git a/food.o b/food.o
+new file mode 100644
+index 0000000..b800d44
+Binary files /dev/null and b/food.o differ
+diff --git a/foodstand.h b/foodstand.h
+index 2ee8083..68435bf 100644
+--- a/foodstand.h
++++ b/foodstand.h
+@@ -1,4 +1,3 @@
+-#include<cstdio>
+ #include<iostream>
+ #include<vector>
+ #include<string>
+@@ -7,11 +6,17 @@
+ using namespace std;
+ 
+ class food;
+-
++#ifndef fstanddef
++#define fstanddef 1
+ class foodstand
+ {
+ public:
+ 	foodstand();
+     food* create(int p);
+     int Buy(string f);
++    static foodstand* GetInstance(){
++        static foodstand instance;
++        return &instance;
++    }
+ };
++#endif
+\ No newline at end of file
+diff --git a/foodstand.o b/foodstand.o
+new file mode 100644
+index 0000000..ebcdd00
+Binary files /dev/null and b/foodstand.o differ
+diff --git a/main.cpp b/main.cpp
+index d6c3644..29edb0e 100644
+--- a/main.cpp
++++ b/main.cpp
+@@ -18,13 +18,11 @@ vector<string> SplitString(string s)
+ 	vector<string> outputString(begin, end);
+ 	return outputString;
+ }
+-
+ int main(){
+ 	// New class
+ 	backstage* backStage = backstage::Get_Instance();
+ 	vector<customer*> customers;
+ 	vector<salesman*> salesmans;
+-
+ 	while(1)
+ 	{
+ 		// Read input
+@@ -51,12 +49,12 @@ int main(){
+ 				string name = inputStrings[1];
+ 				movietime t;
+ 				t.minute = stoi(inputStrings[2]);
+-				movie* m = backStage->New_Movie(name, t, inputStrings[3], 0.5);
++				movie* m = backStage->New_Movie(name, t, inputStrings[3], 1);
+ 			}
+ 
+ 			if (inputStrings[0] == "New_Cinema")
+ 			{
+-				cinema* New_Cinema(int id,int column,int row,string type);
++				// cinema* backStage->New_Cinema(int id,int column,int row,string type);
+ 				int cinemaid = stoi(inputStrings[1]);
+ 				int rownum = stoi(inputStrings[2]);
+ 				int colnum = stoi(inputStrings[3]);
+@@ -65,3 +63,4 @@ int main(){
+ 		}
+ 	}
+ }
++
+diff --git a/main.o b/main.o
+new file mode 100644
+index 0000000..093337b
+Binary files /dev/null and b/main.o differ
+diff --git a/movie.h b/movie.h
+index 46263e9..de631c5 100644
+--- a/movie.h
++++ b/movie.h
+@@ -17,10 +17,13 @@ public:
+     int price_factor;
+     vector<package*> Search(cinema*, movietime);
+     vector<pair<cinema*, movietime>> Get_Table();
+-    movie(){}
++    movie(){
++        description = "";
++        name = "";
++    }
+     movie(string name1, movietime duration1, string description1, int price_factor1);
+-    bool Add_Movie(cinema*);
+-    bool Delete_Movie(movie*);
++    bool Add_Movie(cinema* cinema_pointer);
++    bool Delete_Movie(cinema* cinema_pointer,movietime t);
+ };
+ 
+ #endif
+\ No newline at end of file
+diff --git a/movie.o b/movie.o
+new file mode 100644
+index 0000000..333145a
+Binary files /dev/null and b/movie.o differ
+diff --git a/others.h b/others.h
+index 7c82a90..26238f3 100644
+--- a/others.h
++++ b/others.h
+@@ -23,6 +23,61 @@ typedef struct movietime{
+ 		hour=h;
+ 		minute=m;
+ 	}
++	movietime operator+(movietime a){
++		movietime newone(this->month+a.month,this->day+a.day,this->hour+a.hour,this->month+a.month);
++		if(newone.minute>=60){
++			newone.hour += newone.minute/60;
++			newone.minute %=60;
++		}
++		if(newone.hour>=24){
++			newone.day += newone.hour/24;
++			newone.hour%= 24;
++		}
++		if(newone.day>30){
++			newone.month += newone.day/30;
++			newone.day %= 30;
++		}
++		return newone;
++	}
++	bool operator+=(movietime a){
++		this->month+= a.month;
++		this->day += a.day;
++		this->hour += a.hour;
++		this->minute += a.minute;
++		if(this->minute>=60){
++			this->hour += this->minute/60;
++			this->minute %=60;
++		}
++		if(this->hour>=24){
++			this->day += this->hour/24;
++			this->hour%= 24;
++		}
++		if(this->day>30){
++			this->month += this->day/30;
++			this->day %= 30;
++		}
++		return true;
++	}
++	bool operator>(movietime a){
++		if(this->month>a.month)return true;
++		else if(this->month != a.month)return false;
++		if(this->day>a.day)return true;
++		else if(this->day != a.day)return false;
++		if(this->hour>a.hour)return true;
++		else if(this->hour != a.hour)return false;
++		if(this->minute>a.minute)return true;
++		return false;
++	}
++	bool operator<(movietime a){
++		if(this->month<a.month)return true;
++		else if(this->month != a.month)return false;
++		if(this->day<a.day)return true;
++		else if(this->day != a.day)return false;
++		if(this->hour<a.hour)return true;
++		else if(this->hour != a.hour)return false;
++		if(this->minute<a.minute)return true;
++		return false;
++	}	
+ }movietime;
+ 
+ typedef struct package{
+@@ -35,6 +90,10 @@ typedef struct package{
+ 		t.hour =x.hour;
+ 		t.minute=x.minute;
+ 	}
++	package(movie* x){
++		mov = x;
++	}
++	package(){}
+ }package;
+ 
+ typedef struct ticketinfo{
+@@ -42,6 +101,7 @@ typedef struct ticketinfo{
+ 	int value;
+ 	movie* mov;
+ 	cinema* cine;
+-}ticket;
++	ticketinfo(){}
++}ticketinfo;
+ 
+ #endif
+\ No newline at end of file
+diff --git a/output.exe b/output.exe
+new file mode 100644
+index 0000000..4cd0297
+Binary files /dev/null and b/output.exe differ
+diff --git a/salesman.cpp b/salesman.cpp
+index 15e4131..0885194 100644
+--- a/salesman.cpp
++++ b/salesman.cpp
+@@ -1,7 +1,7 @@
+ #include "salesman.h"
+ #include "dispatcher.h"
+ #include "backstage.h"
+-
++#include "foodstand.h"
+ using namespace std;
+ 
+ salesman::salesman(){
+@@ -11,3 +11,20 @@ salesman::salesman(){
+ 	sales_man_num++;
+ 	dspatcher->salesmans.push_back(this);
+ }
++
++vector<package*> salesman::Search_By_Movie(string movie_name){
++	return bkstage->Search_By_Movie(movie_name);
++}
++vector<package*> salesman::Search_By_Time(movietime t){
++	return bkstage->Search_By_Time(t);
++}
++vector<package*> salesman::Search_By_Type(string type){
++	return bkstage->Search_By_Type(type);
++}
++int salesman::Buy_Food(customer* customer_pointer,string food_name){
++	int returns = bkstage->Buy_Food(customer_pointer,food_name);
++	return returns;
++}
++ticketinfo salesman::Buy_Ticket(customer* customer_pointer,string movie_name,int cinema_id,movietime t){
++	return bkstage->Buy_Ticket(customer_pointer,movie_name,cinema_id,t);
++}
+diff --git a/salesman.h b/salesman.h
+index 3a9386c..7a7e4bb 100644
+--- a/salesman.h
++++ b/salesman.h
+@@ -21,22 +21,11 @@ public:
+ 	
+ 	salesman();
+     int Get_Id();
+-    vector<package*> Search_By_Movie(string movie_name){
+-        return vector<package*>(0);
+-    }
+-    vector<package*> Search_By_Time(movietime t){
+-        return vector<package*>(0);
+-    }
+-    vector<package*> Search_By_Type(int cinema){
+-        return vector<package*>(0);
+-    }
+-    int Buy_Food(customer* customer_pointer,string food_name){
+-        return 0;
+-    }
+-    ticketinfo Buy_Ticket(customer* customer_pointer,string movie_name,int cinema_id,movietime t){
+-        ticketinfo ti;
+-        return ti;
+-    }
++    vector<package*> Search_By_Movie(string movie_name);
++    vector<package*> Search_By_Time(movietime t);
++    vector<package*> Search_By_Type(string type);
++    int Buy_Food(customer* customer_pointer,string food_name);
++    ticketinfo Buy_Ticket(customer* customer_pointer,string movie_name,int cinema_id,movietime t);
+ };
+ 
+ 
+diff --git a/salesman.o b/salesman.o
+new file mode 100644
+index 0000000..5edee10
+Binary files /dev/null and b/salesman.o differ

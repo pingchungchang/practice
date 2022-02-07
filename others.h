@@ -101,6 +101,7 @@ typedef struct ticketinfo{
 	int value;
 	movie* mov;
 	cinema* cine;
-}ticket;
+	ticketinfo(){}
+}ticketinfo;
 
 #endif

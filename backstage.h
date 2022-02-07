@@ -5,6 +5,7 @@
 #include <string>
 #include <map>
 
+using namespace std;
 #ifndef backstage_defined
 #define backstage_defined 1
 

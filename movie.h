@@ -17,7 +17,10 @@ public:
     int price_factor;
     vector<package*> Search(cinema*, movietime);
     vector<pair<cinema*, movietime>> Get_Table();
-    movie(){}
+    movie(){
+        description = "";
+        name = "";
+    }
     movie(string name1, movietime duration1, string description1, int price_factor1);
     bool Add_Movie(cinema* cinema_pointer);
     bool Delete_Movie(cinema* cinema_pointer,movietime t);

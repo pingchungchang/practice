@@ -1,5 +1,6 @@
 #include "backstage.h"
-
+#include <string>
+using namespace std;
 backstage::backstage(){
 	fstand = new foodstand();
 }
@@ -9,9 +10,10 @@ movie* backstage::New_Movie(string name,movietime t,string description,int price
 	newone->duration = t;
 	newone->description = description;
 	newone->price_factor = price_factor;
-	onstage_movies[newone->name] = newone;
+	onstage_movies[name] = newone;
 	return newone;
 }
+
 cinema* backstage::New_Cinema(int id,int column,int row,string type){
 	cinema* c;
 	if(type == "kids"){
@@ -44,7 +46,8 @@ bool backstage::Add_Movie(string movie_name,int cinema_id){
 		
 		//error!
 		if(now.first>lastone+movietime(0,0,0,30)+m_id->duration){
-			c_pointer->time_based_table.insert(make_pair(lastone+movietime(0,0,0,15),m_id),c_pointer->time_based_table.begin()+i);
+			auto p = make_pair(lastone+movietime(0,0,0,15),m_id);
+			c_pointer->time_based_table.insert(c_pointer->time_based_table.begin()+i,p);
 			m_id->time_based_table.push_back(make_pair(c_pointer,lastone+movietime(0,0,0,15)));
 			return true;
 		}
@@ -86,6 +89,8 @@ vector<package*> backstage::Search_By_Time(movietime t){
 }
 
 
-vector<package*> Search_By_Type(string cinema_type);
-int Buy_Food(customer* customer_pointer,string food_name);
-ticketinfo Buy_Ticket(customer* customer_pointer,string movie_name,int cinema_id,movietime t);
+vector<package*> backstage::Search_By_Type(string cinema_type){return vector<package*>(0);}
+int backstage::Buy_Food (customer* customer_pointer,string food_name){return 0;}
+ticketinfo backstage::Buy_Ticket(customer* customer_pointer,string movie_name,int cinema_id,movietime t){
+	return ticketinfo();
+}
