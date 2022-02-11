@@ -18,7 +18,7 @@ public:
     int id;
     int row;
     int column;
-    vector<vector<customer*>> seats;
+    vector<vector<vector<customer*>>> seats;//可能要開三為(時間軸)
     vector<pair<movietime, movie*>> time_based_table;
     int price_factor;
     cinema(){}

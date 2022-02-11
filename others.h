@@ -78,6 +78,10 @@ typedef struct movietime{
 		if(this->minute<a.minute)return true;
 		return false;
 	}	
+	bool operator ==(movietime a){
+		if(this->month == a.month&&this->day == a.day&&this->hour == a.hour&&this->minute == a.minute)return true;
+		else return false;
+	}
 }movietime;
 
 typedef struct package{

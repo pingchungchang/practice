@@ -12,7 +12,13 @@ class dispatcher{
 public:
     dispatcher(){};
     vector<salesman*> salesmans;
-    salesman* Match(customer* customer_pointer);
+    static int k;
+    salesman* Match(customer* customer_pointer){
+        return salesmans[0];
+        // if(salesmans.size()==0)return nullptr;
+        // k++;
+        // return salesmans[k%salesmans.size()];
+    }
     static dispatcher* Get_Instance(){
 	    static dispatcher instance;
 		return &instance;    	
