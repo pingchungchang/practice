@@ -18,9 +18,9 @@ vector<package*> salesman::Search_By_Movie(string movie_name){
 vector<package*> salesman::Search_By_Time(movietime t){
 	return bkstage->Search_By_Time(t);
 }
-vector<package*> salesman::Search_By_Type(string type){
-	return bkstage->Search_By_Type(type);
-}
+// vector<package*> salesman::Search_By_Type(string type){
+// 	return bkstage->Search_By_Type(type);
+// }
 int salesman::Buy_Food(customer* customer_pointer,string food_name){
 	int returns = bkstage->Buy_Food(customer_pointer,food_name);
 	return returns;

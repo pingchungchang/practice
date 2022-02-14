@@ -14,13 +14,13 @@ movie* backstage::New_Movie(string name,movietime t,string description,int price
 	return newone;
 }
 
-cinema* backstage::New_Cinema(int id,int column,int row,string type){
+cinema* backstage::New_Cinema(int id,int col,int row,string type){
 	cinema* c;
 	if(type == "kids"){
 		c = new cinema();
 		c->id = id;
 		c->row = row;
-		c->column = column;
+		c->col = col;
 	}
 	this->cinemas[id] = c;
 	return c;
@@ -101,23 +101,19 @@ int backstage::Buy_Food (customer* customer_pointer,string food_name){
 }
 ticketinfo backstage::Buy_Ticket(customer* customer_pointer,string movie_name,int cinema_id,movietime t){
 	cinema* c_id = cinemas[cinema_id];
-	for(int i = 0;i<c_id->time_based_table.size();i++){
-		if(c_id->time_based_table[i].first == t){
-			for(int j = 0;j<c_id->seats[0].size();j++){
-				for(int k = 0;k< c_id->seats[0][0].size();k++){
-					if(c_id->SetSeat(j,k,t)){
-						ticketinfo returns;
-						returns.mov = onstage_movies[movie_name];
-						returns.cine = c_id;
-						returns.value = onstage_movies[movie_name]->price_factor;
-						returns.t = t;
-						return returns;
-					}
-				}
+	for(int i = 0;i<c_id->row;i++){
+		for(int j = 0;j<c_id->col;j++){
+			if(c_id->SetSeat(i,j,t,customer_pointer) == true){
+					ticketinfo returns;
+					returns.mov = onstage_movies[movie_name];
+					returns.cine = c_id;
+					returns.value = onstage_movies[movie_name]->price_factor;
+					returns.t = t;
+					return returns;				
 			}
 		}
 	}
 	ticketinfo returns;
-	returns.value = false;
+	returns.value = -1;
 	return returns;
 }

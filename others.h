@@ -7,7 +7,7 @@ class cinema;
 #ifndef others_defined // if "others_defined" no defined => if, else
 #define others_defined 1
 
-typedef struct movietime{
+struct movietime{
 	int month;
 	int day;
 	int hour;
@@ -58,7 +58,7 @@ typedef struct movietime{
 		}
 		return true;
 	}
-	bool operator>(movietime a){
+	inline bool operator>(const movietime a)const{
 		if(this->month>a.month)return true;
 		else if(this->month != a.month)return false;
 		if(this->day>a.day)return true;
@@ -68,7 +68,7 @@ typedef struct movietime{
 		if(this->minute>a.minute)return true;
 		return false;
 	}
-	bool operator<(movietime a){
+	inline bool operator<(const movietime a)const{
 		if(this->month<a.month)return true;
 		else if(this->month != a.month)return false;
 		if(this->day<a.day)return true;
@@ -78,11 +78,11 @@ typedef struct movietime{
 		if(this->minute<a.minute)return true;
 		return false;
 	}	
-	bool operator ==(movietime a){
+	inline bool operator ==(const movietime a)const{
 		if(this->month == a.month&&this->day == a.day&&this->hour == a.hour&&this->minute == a.minute)return true;
 		else return false;
 	}
-}movietime;
+};//movietime;
 
 typedef struct package{
 	movie* mov;

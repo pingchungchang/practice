@@ -22,11 +22,11 @@ vector<package*> customer::Search_By_Time(movietime t){
 	salesman* seller = d->Match(this);
 	return seller->Search_By_Time(t);	
 }
-vector<package*> customer::Search_By_Type(string ci){
-	dispatcher* d = dispatcher::Get_Instance();
-	salesman* seller = d->Match(this);
-	return seller->Search_By_Type(ci);	
-}
+// vector<package*> customer::Search_By_Type(string ci){
+// 	dispatcher* d = dispatcher::Get_Instance();
+// 	salesman* seller = d->Match(this);
+// 	return seller->Search_By_Type(ci);	
+// }
 int customer::Buy_Food(string food_name){
 	dispatcher* d = dispatcher::Get_Instance();
 	salesman* seller = d->Match(this);
@@ -38,3 +38,5 @@ ticketinfo customer::Buy_Ticket(string movie_name,int cinema_id,movietime t){
 	return seller->Buy_Ticket(this,movie_name,cinema_id,t);	
 }
 
+/*
+new add search
