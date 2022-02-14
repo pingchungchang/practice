@@ -11,6 +11,7 @@ class dispatcher;
 class customer{
 public:
     customer(string c_name,string c_id,int c_age);
+    customer(){};
     string name;
     string id;
     int age;

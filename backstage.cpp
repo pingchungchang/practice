@@ -26,6 +26,9 @@ cinema* backstage::New_Cinema(int id,int column,int row,string type){
 	return c;
 }
 bool backstage::Delete_Movie(string movie_name){
+	for(auto it = cinemas.begin();it != cinemas.end();it++){
+		it->second->Delete_Movie(onstage_movies[movie_name]);
+	}
 	onstage_movies.erase(movie_name);
 	return true;
 }
@@ -88,10 +91,11 @@ vector<package*> backstage::Search_By_Time(movietime t){
 }
 
 
-vector<package*> backstage::Search_By_Type(string cinema_type){
-	vector<package*> returns;
-	return returns;
-}
+// vector<package*> backstage::Search_By_Type(string cinema_type){
+// 	vector<package*> returns;
+
+// 	return returns;
+// }
 int backstage::Buy_Food (customer* customer_pointer,string food_name){
 	return fstand->Buy(food_name);
 }

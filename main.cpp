@@ -23,6 +23,10 @@ int main(){
 	backstage* backStage = backstage::Get_Instance();
 	vector<customer*> customers;
 	vector<salesman*> salesmans;
+
+	salesmans.push_back(new salesman());
+	customers.push_back(new customer());
+	
 	while(1)
 	{
 		// Read input
@@ -60,7 +64,40 @@ int main(){
 				int colnum = stoi(inputStrings[3]);
 				cinema* c = backStage->New_Cinema(cinemaid, colnum, rownum, "kids");
 			}
+			if(inputStrings[0] == "Add_Movie"){
+				string name = inputStrings[1];
+				int c = stoi(inputStrings[2]);
+				int returns = backStage->Add_Movie(name,c);
+				if(returns != 1){
+					cout<<"error\n";
+					return -1;
+				}
+			}
+			if(inputStrings[0] == "Search_By_Movie"){
+				string name = inputStrings[1];
+				vector<package*> returns = salesmans[0]->Search_By_Movie(name);
+				cout<<"There are "<<returns.size()<<" times available now\n";
+				for(auto i:returns){
+					cout<<i->t.month<<i->t.day<<i->t.hour<<i->t.minute<<' '<<i->cine<<' '<<i->mov->name<<'\n';
+				}
+			}
+			if(inputStrings[0] == "Search_By_Time"){
+				movietime t;
+				int k;
+				k = stoi(inputStrings[1]);
+				t.month = k;
+				k = stoi(inputStrings[2]);
+				t.day = k;
+				k = stoi(inputStrings[3]);
+				t.hour = k;
+				k = stoi(inputStrings[4]);
+				t.minute = k;
+				vector<package*> returns = salesmans[0]->Search_By_Time(t);
+				cout<<"There are "<<returns.size()<<" movies at that time\n";
+				for(auto i:returns){
+					cout<<i->cine->id<<'\n';
+				}
+			}
 		}
 	}
 }
-
