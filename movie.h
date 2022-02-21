@@ -22,6 +22,8 @@ public:
         name = "";
     }
     movie(string name1, movietime duration1, string description1, int price_factor1);
+    movie Search(cinema*, movietime);
+    vector<pair<cinema*, movietime>> Get_Table();
     bool Add_Movie(cinema* cinema_pointer);
     bool Delete_Movie(cinema* cinema_pointer,movietime t);
 };
