@@ -17,7 +17,7 @@ cinema::cinema(int id1, int col1, int row1, string type1)
    time_based_table.resize(0);
    price_factor = 1;
 };
-movietime cinema::Add_Movie (movietime time, movie* movie_id){
+movietime cinema::Add_Movie (movie* movie_id){
    movietime lastone;
    if(this->time_based_table.size()>0) {
       lastone = this->time_based_table[0].first;

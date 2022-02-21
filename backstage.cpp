@@ -29,33 +29,16 @@ bool backstage::Delete_Movie(string movie_name){
 	for(auto it = cinemas.begin();it != cinemas.end();it++){
 		it->second->Delete_Movie(onstage_movies[movie_name]);
 	}
+	auto it = onstage_movies[movie_name];
 	onstage_movies.erase(movie_name);
+	free(it);
 	return true;
 }
 bool backstage::Add_Movie(string movie_name,int cinema_id){
 	cinema* c_pointer = cinemas[cinema_id];
 	movie* m_id = onstage_movies[movie_name];
-	movietime lastone;
-	if(c_pointer->time_based_table.size()>0)lastone = c_pointer->time_based_table[0].first;
-	else{
-		c_pointer->time_based_table.push_back(make_pair(movietime(1,0,0,0),m_id));
-		m_id->time_based_table.push_back(make_pair(c_pointer,movietime(0,0,0,0)));
-		return true;
-	}
-	for(int i = 1;i<c_pointer->time_based_table.size();i++){
-		auto now = c_pointer->time_based_table[i];
-		
-		
-		//error!
-		if(now.first>lastone+movietime(0,0,0,30)+m_id->duration){
-			auto p = make_pair(lastone+movietime(0,0,0,15),m_id);
-			c_pointer->time_based_table.insert(c_pointer->time_based_table.begin()+i,p);
-			m_id->time_based_table.push_back(make_pair(c_pointer,lastone+movietime(0,0,0,15)));
-			return true;
-		}
-	}
-	c_pointer->time_based_table.push_back(make_pair(lastone+movietime(0,0,0,15),m_id));
-	m_id->time_based_table.push_back(make_pair(c_pointer,lastone+movietime(0,0,0,15)));
+	movietime t = c_pointer->Add_Movie(m_id);
+	m_id->Add_Movie(c_pointer,t);
 	return true;
 }
 

@@ -40,3 +40,4 @@ ticketinfo customer::Buy_Ticket(string movie_name,int cinema_id,movietime t){
 
 /*
 new add search
+*/

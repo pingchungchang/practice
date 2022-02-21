@@ -24,7 +24,7 @@ public:
     int price_factor;
     cinema(){}
     cinema(int id1, int column1, int row1, string type1);
-    movietime Add_Movie (movietime time, movie* movie_id);
+    movietime Add_Movie (movie* movie_id);
     bool Delete_Movie (movie* movie_id);
     vector<pair<movietime, movie* >>& GetTable();
     bool CheckAvailable(string movie_name,int cinema_id,movietime time);

@@ -78,7 +78,7 @@ int main(){
 				vector<package*> returns = salesmans[0]->Search_By_Movie(name);
 				cout<<"There are "<<returns.size()<<" times available now\n";
 				for(auto i:returns){
-					cout<<i->t.month<<i->t.day<<i->t.hour<<i->t.minute<<' '<<i->cine<<' '<<i->mov->name<<'\n';
+					cout<<i->t.month<<i->t.day<<i->t.hour<<i->t.minute<<' '<<i->cine->id<<' '<<i->mov->name<<'\n';
 				}
 			}
 			if(inputStrings[0] == "Search_By_Time"){
